@@ -1,0 +1,42 @@
+.event_card {
+  width: 300px;
+  box-shadow: 0px 0px 5px 0px #cdcccf;
+}
+.image_container img {
+  width: 100%;
+}
+
+.event_items {
+  display: flex;
+}
+.event_card .event_container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 10px 0px 5px;
+}
+.event_card .event_items p {
+  margin: 5px;
+  background: red;
+  padding: 5px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.event_card .rating_items {
+  padding-top: 8px;
+  font-size: 20px;
+}
+.description_section h6 {
+  margin-bottom: 5px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.description_section {
+  padding: 0px 10px 10px 10px;
+}

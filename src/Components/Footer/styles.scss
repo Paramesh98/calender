@@ -1,0 +1,38 @@
+.footer_top_section {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.day_section {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #cdcccf;
+}
+
+.day_section .day_item {
+  width: 140px;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.footer_container .heading_section {
+  font-size: 25px;
+}
+
+.today_section {
+  display: flex;
+}
+
+.today_section div {
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 1px solid #f5f4f6;
+  border-radius: 5px;
+}
+
+.footer_container {
+  padding-top: 10px;
+  position: absolute;
+  bottom: 10%;
+}

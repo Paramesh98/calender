@@ -1,0 +1,51 @@
+.tile_container {
+  width: 140px;
+  text-align: right;
+  background-color: #ffffff;
+  height: 140px;
+  border: 1px solid #e4e3e4;
+  overflow: hidden;
+}
+
+.tile_container:nth-child(7n-6) {
+  background: #f5f4f6;
+}
+
+.tile_container .inner {
+  margin: 5px;
+  font-size: 20px;
+}
+
+.event_color {
+  display: flex;
+}
+.event_color p {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-top: 0px;
+  margin-left: 5px;
+  margin-top: 3px;
+  margin-bottom: 5px;
+}
+.color_pink {
+  background-color: pink;
+}
+
+.color_orange {
+  background-color: orange;
+}
+.color_blue {
+  background-color: skyblue;
+}
+
+.tile_container .event_container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.inner_event_container {
+  display: flex;
+  justify-content: space-between;
+}
