@@ -5,7 +5,7 @@ import "./styles.scss";
 
 function EventCard({data}) {
 
-  const colors = ["red","blue","green", "yellow"]
+  const colors = ["pink", "orange", "skyblue", "#ed2727"];
   return (
     <div className="event_card">
       <div className="image_container">
@@ -35,7 +35,7 @@ function EventCard({data}) {
                 color: index + 1 <= data.Rating ? "#e7900d" : "black",
               }}
             >
-              &#9734;
+              &#9733;
             </span>
           ))}
         </div>

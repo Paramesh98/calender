@@ -39,14 +39,26 @@
   position: absolute;
   left: 10px;
   z-index: 5;
+      border: 1px solid grey;
+    color: grey;
+    cursor: pointer;
+    outline: none;
 }
 
 .button_right {
   top: 50%;
   position: absolute;
   right: 10px;
+      border: 1px solid grey;
+    color: grey;
+    cursor: pointer;
+    outline: none;
 }
 .close_item {
   position: absolute;
   right: 10px;
+      border: 1px solid grey;
+    color: grey;
+    cursor: pointer;
+    outline: none;
 }
