@@ -28,12 +28,17 @@
   width: 1000px;
   margin: 0 auto;
   overflow: hidden;
+  position: fixed;
+  background: #fff;
+  top: 0px;
+      height: 100vh;
 }
 
 .button_left {
   top: 50%;
   position: absolute;
   left: 10px;
+  z-index: 5;
 }
 
 .button_right {

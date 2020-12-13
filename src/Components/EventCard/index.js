@@ -1,7 +1,11 @@
 import React from "react";
 import CardImage from "../../asset/card-image.png";
 import "./styles.scss";
-function EventCard() {
+
+
+function EventCard({data}) {
+
+  const colors = ["red","blue","green", "yellow"]
   return (
     <div className="event_card">
       <div className="image_container">
@@ -9,25 +13,38 @@ function EventCard() {
       </div>
       <div className="event_container">
         <div className="event_items">
-          <p className="w">W</p>
-          <p className="dc">DC</p>
-          <p className="pr">Pr</p>
-          <p className="c">C</p>
+          {data.TypeOfDay.map((item, index) => {
+            let splited = item.split(" ");
+            let initials =
+              splited.length > 1
+                ? splited[0]?.substring(0, 1).toUpperCase() +
+                  splited[1]?.substring(0, 1)?.toLowerCase()
+                : splited[0]?.substring(0, 1).toUpperCase();
+
+            return (
+              <p style={{ backgroundColor: colors[index] }} className="w">
+                {initials}
+              </p>
+            );
+          })}
         </div>
         <div className="rating_items">
-          {Array.from(Array(5).keys()).map((item) => (
-            <span>&#9734;</span>
+          {Array.from(Array(5).keys()).map((item, index) => (
+            <span
+              style={{
+                color: index + 1 <= data.Rating ? "#e7900d" : "black",
+              }}
+            >
+              &#9734;
+            </span>
           ))}
         </div>
       </div>
       <div className="description_section">
         <h6>
-          <strong>17th Nov,2020</strong>
+          <strong>{new Date(data.CalendarDateTime).toDateString()}</strong>
         </h6>
-        <p>
-          Today was an amazing day! I really felt enjoyed my trip to parague
-          last weekend. Next up is Budapest & Austria
-        </p>
+        <p>{data.Text}</p>
       </div>
     </div>
   );

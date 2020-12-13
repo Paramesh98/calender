@@ -17,6 +17,7 @@ function App() {
   const [nextMonthValue, setNextMonthValue] = useState([]);
   const [prevMonthValue, setPrevMonthValue] = useState([]);
 
+
   function throttle(func, wait, options) {
     var context, args, result;
     var timeout = null;
@@ -50,39 +51,36 @@ function App() {
   }
 
   var lastScrollTop = 0;
-
   function checkScrollDirection() {
-    var st = window.pageYOffset || document.documentElement.scrollTop;
-    if (st > lastScrollTop) {
-      // downscroll code
-      // console.log("down");
-    } else {
-      // upscroll code
-      // console.log("up");
+    // var st = window.pageYOffset || document.documentElement.scrollTop;
+    // if (st > lastScrollTop) {
+    //   // downscroll code
+    //   // console.log("down");
+    //   // reduceMonth()
+    // } else {
+    //   // upscroll code
+    //   // console.log("up");
+    //   // increaseMonth()
+    // }
+    // lastScrollTop = st;
+
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      console.log("bottom")
+      increaseMonth()
+    }else if(window.scrollY === 0){
+      console.log("top")
+      reduceMonth();
     }
-    lastScrollTop = st;
   }
 
-  React.useEffect(() => {
-    window.addEventListener("scroll", throttle(checkScrollDirection, 1000));
-    return window.removeEventListener(
-      "scroll",
-      throttle(checkScrollDirection, 1000)
-    );
-  }, []);
-
-  // console.log(monthValue[thisMonth - 1]);
-
-  // const getThisMonth = (yearVal, monthVal) => {
-  //   const month = moment(`${yearVal}-${monthVal}`, "YYYY-MM");
-  //   const range = moment().range(
-  //     moment(month).startOf("month"),
-  //     moment(month).endOf("month")
+  // React.useEffect(() => {
+  //   window.addEventListener("scroll", throttle(checkScrollDirection, 1000));
+  //   return window.removeEventListener(
+  //     "scroll",
+  //     throttle(checkScrollDirection, 1000)
   //   );
-  //   const days = range.by("days");
+  // }, []);
 
-  //   return [...days].map((date) => date.format("DD-ddd"));
-  // };
 
   React.useEffect(() => {
     let currentMonth = getThisMonth(
@@ -131,13 +129,12 @@ function App() {
     }
   };
 
-  // console.log(
-  //   prevMonthValue,
-  //   currentMonthValue,
-  //   nextMonthValue,
-  //   thisYear,
-  //   thisMonth
-  // );
+ 
+const setToday = () =>{
+  setThisMonth(new Date().getMonth());
+  setThisYear(new Date().getFullYear());
+}
+
   return (
     <div className="App">
       <Header
@@ -145,6 +142,7 @@ function App() {
         increaseMonth={increaseMonth}
         thisMonth={thisMonth}
         thisYear={thisYear}
+        setToday={setToday}
       />
       <div className="date_section">
         {currentMonthValue && (

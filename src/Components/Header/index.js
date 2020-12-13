@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.scss";
 import { monthValue } from "../../config/data.json";
 
-function Header({ reduceMonth, increaseMonth, thisYear, thisMonth }) {
+function Header({ reduceMonth, increaseMonth, thisYear, thisMonth,setToday }) {
   return (
     <div className="header_container">
       <div className="heading_top_section">
@@ -11,7 +11,7 @@ function Header({ reduceMonth, increaseMonth, thisYear, thisMonth }) {
         </div>
         <div className="today_section">
           <div onClick={reduceMonth}>&#8249;</div>
-          <div>Today</div>
+          <div onClick={setToday}>Today</div>
           <div onClick={increaseMonth}>&#8250;</div>
         </div>
       </div>
