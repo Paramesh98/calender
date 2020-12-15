@@ -14,6 +14,7 @@ function Calender({ currentMonth, nextMonth, prevMonth, thisMonth, thisYear }) {
   const [curoselDate, setCuroselDate] = React.useState();
   const [ResponseObjects, setResponseObject] = React.useState();
 
+  //CONVERT FIRST DAY INTO NUMBER
   const checkFirstDate = (day) => {
     switch (day) {
       case "sun":
@@ -33,6 +34,7 @@ function Calender({ currentMonth, nextMonth, prevMonth, thisMonth, thisYear }) {
     }
   };
 
+  //CONVERT LAST DAY INTO NUMBER
   const checkLastDate = (day) => {
     switch (day) {
       case "sun":
@@ -52,6 +54,7 @@ function Calender({ currentMonth, nextMonth, prevMonth, thisMonth, thisYear }) {
     }
   };
 
+  //FETCH DATA FROM SERER
   const getData = () => {
     const requestObject = {
       RequestObjects: [
@@ -106,7 +109,7 @@ function Calender({ currentMonth, nextMonth, prevMonth, thisMonth, thisYear }) {
       .catch((err) => console.log(err));
   };
 
-  // console.log(currentMonth, nextMonth, prevMonth);
+  //MERGE LAST MONTH,THIS MONTH ,NEXT MONTH VALUE
   React.useEffect(() => {
     getData();
     const checkFirstDay = () => {
@@ -140,33 +143,30 @@ function Calender({ currentMonth, nextMonth, prevMonth, thisMonth, thisYear }) {
     }
   }, [currentMonth, nextMonth, prevMonth]);
 
+  //CHECK IS DAY HAVE ANY EVENTS
   const getEvents = (day, month, year) => {
     let items = [];
 
     ResponseObjects &&
       ResponseObjects[0]?.Posts.map((item) => {
-        // console.log(
-        //   new Date(item.CalendarDateTime).toLocaleDateString(),
-        //   new Date(year, month, day).toLocaleDateString()
-        // );
         if (
           new Date(item.CalendarDateTime).toLocaleDateString() ==
           new Date(year, month, day).toLocaleDateString()
         ) {
           items.push(item);
-          // console.log(item);
         }
       });
 
     return items;
   };
 
+  //CONVERT EVENTS INTO STRING
   const displayEvent = (val, day, month, year) => {
     let date = new Date(year, month, day).toLocaleDateString();
     setCuroselDate(date);
     setShowEventCard(val);
   };
-
+  //CLOSE MODAL
   const closeEvent = () => {
     setShowEventCard(false);
   };
