@@ -19,52 +19,45 @@ function App() {
   const [prevMonthValue, setPrevMonthValue] = useState([]);
   const [yaxis, setYaxis] = useState(0);
 
-  const evntHandler = debounce((e) => {
-    // setYaxis(window.scrollY);
-    if (yaxis <= window.scrollY) {
-      // console.log("scroll down");
-      increaseMonth();
-    } else {
-      // console.log("scroll up");
-      reduceMonth();
-    }
-  }, 500);
-  // const secondEvent = debounce((e) => {
-  //   // console.log("event");
-  //   // console.log(window.scrollY, yaxis);
-  //   // setYaxis(window.scrollY);
-  //   if (window.scrollY == 0) {
-  //     console.log("scroll up");
-  //     // increaseMonth();
-  //     if (thisMonth === 12) {
-  //       setThisYear(thisYear - 1);
-  //     }
-  //     if (thisMonth === 1) {
-  //       setThisMonth(12);
-  //     } else {
-  //       setThisMonth(thisMonth - 1);
-  //     }
-  //   } else {
-  //     console.log("scroll down");
-  //     // reduceMonth();
-  //     if (thisMonth === 11) {
-  //       setThisYear(thisYear + 1);
-  //     }
-  //     if (thisMonth === 12) {
-  //       setThisMonth(1);
-  //     } else {
-  //       setThisMonth(thisMonth + 1);
-  //     }
-  //   }
-  // }, 500);
+  //SCROLL TO TOP AFTER CHANING MONTH
+  const scrollToTop = () => {
+    window.scroll({ top: 10, behavior: "smooth" });
+  };
 
-  // React.useEffect(() => {
-  //   window.addEventListener("scroll", (e) => evntHandler(e));
-  // }, []);
+  //FOR SCROLL FUNCTION
+  const secondEvent = debounce((e) => {
+    // console.log("event");
+    // console.log(window.scrollY, yaxis);
+    // setYaxis(window.scrollY);
+    // if (window.scrollY == 0) {
+    //   if (thisMonth === 12) {
+    //     setThisYear(thisYear - 1);
+    //     setThisMonth(12);
+    //   } else {
+    //     setThisMonth(thisMonth - 1);
+    //   }
+
+    //   scrollToTop();
+    // } else {
+    //   if (thisMonth === 12) {
+    //     setThisMonth(1);
+    //     setThisYear(thisYear + 1);
+    //   } else {
+    //     setThisMonth(thisMonth + 1);
+    //   }
+
+    //   scrollToTop();
+    // }
+    setThisMonth(thisMonth - 1);
+  }, 100);
+
+  //LINK SCROLL FOR MONTH CHANGE
   // React.useEffect(() => {
   //   window.addEventListener("wheel", (e) => secondEvent(e));
+  //   // return window.removeEventListener("wheel", (e) => secondEvent(e));
   // }, []);
 
+  //ADD MONTH DAY YEAR WHEN MONTH CHANGED
   React.useEffect(() => {
     let currentMonth = getThisMonth(
       thisYear,
@@ -80,6 +73,7 @@ function App() {
     setNextMonthValue(nextMonth);
   }, [thisMonth, thisYear]);
 
+  //GET MONTH DAY IN STRING
   var getThisMonth = function (year, month) {
     var monthIndex = month - 1; // 0..11 instead of 1..12
     var names = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
@@ -91,6 +85,8 @@ function App() {
     }
     return result;
   };
+
+  //INCREASE MONTH VALUE
   const reduceMonth = () => {
     if (thisMonth === 12) {
       setThisYear(thisYear - 1);
@@ -101,6 +97,7 @@ function App() {
       setThisMonth(thisMonth - 1);
     }
   };
+  //DECREASE MONTH VALUE
   const increaseMonth = () => {
     if (thisMonth === 11) {
       setThisYear(thisYear + 1);
@@ -112,6 +109,7 @@ function App() {
     }
   };
 
+  //SET INTO TODAY
   const setToday = () => {
     setThisMonth(new Date().getMonth());
     setThisYear(new Date().getFullYear());
@@ -136,9 +134,6 @@ function App() {
             thisYear={thisYear}
           />
         )}
-        {/* {months.map((item, index) => (
-          <Tile key={index} monthValue={item} val={index + 1} />
-        ))} */}
       </div>
     </div>
   );

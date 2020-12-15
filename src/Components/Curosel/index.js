@@ -9,6 +9,7 @@ function Curosel({ closeEvent, date }) {
   const [ResponseObjects, setResponseObject] = React.useState([]);
   const [responesData, setResponseData] = React.useState(null);
 
+  //GET DATE FROM SERVER
   React.useEffect(() => {
     const requestObject = {
       RequestObjects: [
@@ -61,7 +62,6 @@ function Curosel({ closeEvent, date }) {
     )
       .then((res) => {
         setResponseObject(res.data.ResponseObjects);
-        // let responesData = res.data.ResponseObjects[0].Posts;
         let responesData = res.data.ResponseObjects[0].Posts.sort(
           (a, b) => new Date(a.CalendarDateTime) - new Date(b.CalendarDateTime)
         );
@@ -69,8 +69,6 @@ function Curosel({ closeEvent, date }) {
           new Date(item.CalendarDateTime).toLocaleDateString()
         );
 
-        // let sortDate = onlyDate.sort((a, b) => new Date(a) - new Date(b));
-        console.log(onlyDate, date);
         let indexValue = onlyDate.indexOf(date.toString()) - 1;
         setTransform(indexValue * -330);
         setResponseData(responesData);

@@ -12,55 +12,19 @@ function Tile({
   displayEvent,
   ResponseObjects,
 }) {
-  // let eventItem = [];
-  // console.log(
-  //   ResponseObjects[0]?.Posts.map((item) => {
-  //     console.log(
-  //       new Date(item.CalendarDateTime).toLocaleDateString(),
-  //       new Date(thisYear, thisMonth, monthValue).toLocaleDateString()
-  //     );
-  //   })
-  // );
-  // if (
-  //   getDate(ResponseObjects)?.includes(monthValue.toString()) &&
-  //   getMonth(ResponseObjects)?.includes(thisMonth - 1) &&
-  //   getYear(ResponseObjects)?.includes(thisYear.toString())
-  // ) {
-  //   // console.log(monthValue);
-  //   eventItem.push(monthValue);
-  // }
-
-  // const getEventItem = () => {
-  //   eventItem.map((day) => {
-  //     ResponseObjects[0]?.Posts.map((item) => {
-  //       // if (
-  //       //   new Date(item.CalendarDateTime).toLocaleDateString() ==
-  //       //   new Date(thisYear, thisMonth, day).toLocaleDateString()
-  //       // ) {
-  //       console.log(
-  //         new Date(item.CalendarDateTime).toLocaleDateString() ==
-  //           new Date(thisYear, thisMonth - 1, day).toLocaleDateString()
-  //       );
-  //       // }
-  //     });
-  //   });
-  // };
-  // getEventItem();
   const colors = ["#f6cee6", "#faeed4", "#d1e8e0", "#ded2f6", "#f6cee6"];
+  //CALCULATE EVENT DATE
   const eventsDate = ResponseObjects[0]?.Posts.map((item) => {
     let one;
     if (
       new Date(item.CalendarDateTime).getDate() == Number(monthValue) &&
-      new Date(item.CalendarDateTime).getMonth() == thisMonth
+      new Date(item.CalendarDateTime).getMonth() == thisMonth &&
+      new Date(item.CalendarDateTime).getFullYear() == thisYear
     )
       return new Date(item.CalendarDateTime).getDate();
-    // console.log(
-    //   // new Date(item.CalendarDateTime).getDate() == Number(monthValue) &&
-    //   new Date(item.CalendarDateTime).getMonth(),
-    //   thisMonth
-    // );
   });
 
+  //COUNT THE NUMBER OF EVENTS
   let eventNumber;
   const getEventItems = () => {
     ResponseObjects[0].Posts.map((item, index) => {
@@ -72,6 +36,7 @@ function Tile({
 
   getEventItems();
 
+  //GET THE IMAGES OF DAY
   let eventImages;
   const getImages = () => {
     ResponseObjects[0].Posts.map((item, index) => {
@@ -101,10 +66,6 @@ function Tile({
     return today;
   };
 
-  // console.log(event[0]?.TypeOfDay.length == 2, monthValue, eventItem);
-  // console.log(event);
-  // console.log(getEvents(monthValue, thisMonth, thisYear));
-
   return (
     <div className="tile_container">
       {eventsDate.includes(Number(monthValue)) ? (
@@ -115,22 +76,6 @@ function Tile({
         >
           <div className="inner_event_container">
             <div className="event_color">
-              {/* {eventNumber && eventNumber?.length.toString() == 1 && (
-                <p className="color_pink"></p>
-              )}
-              {eventNumber && eventNumber?.length.toString() == 2 && (
-                <>
-                  <p className="color_pink"></p>
-                  <p className="color_orange"></p>
-                </>
-              )}
-              {eventNumber && eventNumber?.length.toString() == 3 && (
-                <>
-                  <p className="color_pink"></p>
-                  <p className="color_orange"></p>
-                  <p className="color_blue"></p>
-                </>
-              )} */}
               {eventNumber &&
                 Array.from(Array(eventNumber?.length)).map((item, index) => (
                   <p key={index} style={{ backgroundColor: colors[index] }}></p>
