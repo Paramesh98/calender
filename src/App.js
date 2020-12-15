@@ -8,6 +8,7 @@ import Moment from "moment";
 import { extendMoment } from "moment-range";
 import "./App.css";
 import Calender from "./Components/Calender";
+import { debounce } from "lodash";
 
 const moment = extendMoment(Moment);
 function App() {
@@ -16,71 +17,53 @@ function App() {
   const [currentMonthValue, setCurrentMonthValue] = useState([]);
   const [nextMonthValue, setNextMonthValue] = useState([]);
   const [prevMonthValue, setPrevMonthValue] = useState([]);
+  const [yaxis, setYaxis] = useState(0);
 
-
-  function throttle(func, wait, options) {
-    var context, args, result;
-    var timeout = null;
-    var previous = 0;
-    if (!options) options = {};
-    var later = function () {
-      previous = options.leading === false ? 0 : Date.now();
-      timeout = null;
-      result = func.apply(context, args);
-      if (!timeout) context = args = null;
-    };
-    return function () {
-      var now = Date.now();
-      if (!previous && options.leading === false) previous = now;
-      var remaining = wait - (now - previous);
-      context = this;
-      args = arguments;
-      if (remaining <= 0 || remaining > wait) {
-        if (timeout) {
-          clearTimeout(timeout);
-          timeout = null;
-        }
-        previous = now;
-        result = func.apply(context, args);
-        if (!timeout) context = args = null;
-      } else if (!timeout && options.trailing !== false) {
-        timeout = setTimeout(later, remaining);
-      }
-      return result;
-    };
-  }
-
-  var lastScrollTop = 0;
-  function checkScrollDirection() {
-    // var st = window.pageYOffset || document.documentElement.scrollTop;
-    // if (st > lastScrollTop) {
-    //   // downscroll code
-    //   // console.log("down");
-    //   // reduceMonth()
-    // } else {
-    //   // upscroll code
-    //   // console.log("up");
-    //   // increaseMonth()
-    // }
-    // lastScrollTop = st;
-
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      console.log("bottom")
-      increaseMonth()
-    }else if(window.scrollY === 0){
-      console.log("top")
+  const evntHandler = debounce((e) => {
+    // setYaxis(window.scrollY);
+    if (yaxis <= window.scrollY) {
+      // console.log("scroll down");
+      increaseMonth();
+    } else {
+      // console.log("scroll up");
       reduceMonth();
     }
-  }
+  }, 500);
+  // const secondEvent = debounce((e) => {
+  //   // console.log("event");
+  //   // console.log(window.scrollY, yaxis);
+  //   // setYaxis(window.scrollY);
+  //   if (window.scrollY == 0) {
+  //     console.log("scroll up");
+  //     // increaseMonth();
+  //     if (thisMonth === 12) {
+  //       setThisYear(thisYear - 1);
+  //     }
+  //     if (thisMonth === 1) {
+  //       setThisMonth(12);
+  //     } else {
+  //       setThisMonth(thisMonth - 1);
+  //     }
+  //   } else {
+  //     console.log("scroll down");
+  //     // reduceMonth();
+  //     if (thisMonth === 11) {
+  //       setThisYear(thisYear + 1);
+  //     }
+  //     if (thisMonth === 12) {
+  //       setThisMonth(1);
+  //     } else {
+  //       setThisMonth(thisMonth + 1);
+  //     }
+  //   }
+  // }, 500);
 
   // React.useEffect(() => {
-  //   window.addEventListener("scroll", throttle(checkScrollDirection, 1000));
-  //   return window.removeEventListener(
-  //     "scroll",
-  //     throttle(checkScrollDirection, 1000)
-  //   );
+  //   window.addEventListener("scroll", (e) => evntHandler(e));
   // }, []);
-
+  // React.useEffect(() => {
+  //   window.addEventListener("wheel", (e) => secondEvent(e));
+  // }, []);
 
   React.useEffect(() => {
     let currentMonth = getThisMonth(
@@ -129,11 +112,10 @@ function App() {
     }
   };
 
- 
-const setToday = () =>{
-  setThisMonth(new Date().getMonth());
-  setThisYear(new Date().getFullYear());
-}
+  const setToday = () => {
+    setThisMonth(new Date().getMonth());
+    setThisYear(new Date().getFullYear());
+  };
 
   return (
     <div className="App">

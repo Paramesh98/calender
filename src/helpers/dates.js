@@ -1,5 +1,4 @@
 import React from "react";
-import { ResponseObjects } from "../config/response.json";
 
 const monthValue = (val) => {
   switch (val) {
@@ -30,9 +29,9 @@ const monthValue = (val) => {
   }
 };
 
-export const getDate = () => {
+export const getDate = (ResponseObjects) => {
   let date = [];
-  ResponseObjects[0].Posts.map((item) => {
+  ResponseObjects[0]?.Posts.map((item) => {
     let d = new Date(item.CalendarDateTime).toString().split(" ");
     // console.log(new Date(item.CalendarDateTime).toString());
     let day = d[2];
@@ -43,9 +42,9 @@ export const getDate = () => {
   return date;
 };
 
-export const getMonth = () => {
+export const getMonth = (ResponseObjects) => {
   let month = [];
-  ResponseObjects[0].Posts.map((item) => {
+  ResponseObjects[0]?.Posts.map((item) => {
     let d = new Date(item.CalendarDateTime).toString().split(" ");
     let monthVAl = d[1];
     month.push(monthValue(monthVAl));
@@ -56,9 +55,9 @@ export const getMonth = () => {
   return month;
 };
 
-export const getYear = () => {
+export const getYear = (ResponseObjects) => {
   let year = [];
-  ResponseObjects[0].Posts.map((item) => {
+  ResponseObjects[0]?.Posts.map((item) => {
     let d = new Date(item.CalendarDateTime).toString().split(" ");
     // console.log(new Date(item.CalendarDateTime).toString());
     let yearVal = d[3];

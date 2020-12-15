@@ -24,12 +24,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: #000;
+  font-weight: bold;
+  padding: 7px;
 }
 
 .event_card .rating_items {
   padding-top: 8px;
   font-size: 20px;
+  color: #000;
 }
 .description_section h6 {
   margin-bottom: 5px;

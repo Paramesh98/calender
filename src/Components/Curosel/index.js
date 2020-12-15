@@ -1,27 +1,88 @@
 import React from "react";
 import EventCard from "../EventCard";
 import "./styles.scss";
-import {ResponseObjects} from '../../config/response.json'
 
-function Curosel({ closeEvent,date }) {
+import Axios from "axios";
+
+function Curosel({ closeEvent, date }) {
   const [transform, setTransform] = React.useState(0);
-  
-let responesData = ResponseObjects[0].Posts
-let onlyDate = responesData.map((item) => new Date(item.CalendarDateTime).toLocaleDateString() );
-console.log(onlyDate.indexOf(date))
-console.log(transform)
+  const [ResponseObjects, setResponseObject] = React.useState([]);
+  const [responesData, setResponseData] = React.useState(null);
 
-React.useEffect(() =>{
-  let indexValue = onlyDate.indexOf(date.toString())-1
-    setTransform(indexValue * -330)
-},[])
+  React.useEffect(() => {
+    const requestObject = {
+      RequestObjects: [
+        {
+          Post: {
+            OperationType: "Read",
+            Privacy: {
+              SearchValues: ["Public"],
+              Return: true,
+            },
+            UserId: {
+              SearchValues: ["assign"],
+              Return: false,
+            },
+            id: {
+              Return: true,
+            },
+
+            IsCalendarEntry: {
+              SearchValues: [true],
+              Return: true,
+            },
+            Images: {
+              Return: true,
+            },
+            Text: {
+              Return: true,
+            },
+            Rating: {
+              Return: true,
+            },
+            TypeOfDay: {
+              Return: true,
+            },
+
+            MaxItemCount: "5",
+
+            CalendarDateTime: {
+              Return: true,
+              Sort: "Descending",
+            },
+            ContinuationToken: null,
+          },
+        },
+      ],
+    };
+    Axios.post(
+      "https://quinncareapidev.azurewebsites.net/api/graph",
+      requestObject
+    )
+      .then((res) => {
+        setResponseObject(res.data.ResponseObjects);
+        // let responesData = res.data.ResponseObjects[0].Posts;
+        let responesData = res.data.ResponseObjects[0].Posts.sort(
+          (a, b) => new Date(a.CalendarDateTime) - new Date(b.CalendarDateTime)
+        );
+        let onlyDate = responesData.map((item) =>
+          new Date(item.CalendarDateTime).toLocaleDateString()
+        );
+
+        // let sortDate = onlyDate.sort((a, b) => new Date(a) - new Date(b));
+        console.log(onlyDate, date);
+        let indexValue = onlyDate.indexOf(date.toString()) - 1;
+        setTransform(indexValue * -330);
+        setResponseData(responesData);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const goLeft = () => {
-   setTransform(transform + 330);
+    setTransform(transform + 330);
   };
   const goRight = () => {
-    
-     setTransform(transform - 330);
+    setTransform(transform - 330);
   };
   return (
     <div className="curosel_container">
@@ -47,7 +108,7 @@ React.useEffect(() =>{
           responesData.map((item, index) => (
             <div
               className={
-                Math.abs(transform / 330)+1 === index
+                Math.abs(transform / 330) + 1 === index
                   ? `curosel_item active`
                   : `curosel_item `
               }
@@ -62,7 +123,7 @@ React.useEffect(() =>{
       </div>
       <button
         disabled={
-          Math.abs(transform) >= (responesData.length - 3) * 330 ? true : false
+          Math.abs(transform) >= (responesData?.length - 3) * 330 ? true : false
         }
         onClick={goRight}
         className="button_right"

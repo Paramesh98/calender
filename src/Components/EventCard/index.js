@@ -2,14 +2,12 @@ import React from "react";
 import CardImage from "../../asset/card-image.png";
 import "./styles.scss";
 
-
-function EventCard({data}) {
-
-  const colors = ["pink", "orange", "skyblue", "#ed2727"];
+function EventCard({ data }) {
+  const colors = ["#f6cee6", "#faeed4", "#d1e8e0", "#ded2f6"];
   return (
     <div className="event_card">
       <div className="image_container">
-        <img src={CardImage} alt="event-image" />
+        <img src={data?.Images[0]?.ImageUrl} alt="event-image" />
       </div>
       <div className="event_container">
         <div className="event_items">
@@ -32,7 +30,7 @@ function EventCard({data}) {
           {Array.from(Array(5).keys()).map((item, index) => (
             <span
               style={{
-                color: index + 1 <= data.Rating ? "#e7900d" : "black",
+                color: index + 1 <= data.Rating ? "#9ad1f7" : "#dddddd",
               }}
             >
               &#9733;
