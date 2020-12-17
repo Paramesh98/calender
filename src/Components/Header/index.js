@@ -2,7 +2,15 @@ import React from "react";
 import "./styles.scss";
 import { monthValue } from "../../config/data.json";
 
-function Header({ reduceMonth, increaseMonth, thisYear, thisMonth,setToday }) {
+function Header({
+  reduceMonth,
+  increaseMonth,
+  thisYear,
+  thisMonth,
+  setToday,
+  nextButton,
+  prevButton,
+}) {
   return (
     <div className="header_container">
       <div className="heading_top_section">
@@ -10,9 +18,13 @@ function Header({ reduceMonth, increaseMonth, thisYear, thisMonth,setToday }) {
           <strong>{monthValue[thisMonth]}</strong> {thisYear}
         </div>
         <div className="today_section">
-          <div onClick={reduceMonth}>&#8249;</div>
+          <div ref={prevButton} onClick={reduceMonth}>
+            &#8249;
+          </div>
           <div onClick={setToday}>Today</div>
-          <div onClick={increaseMonth}>&#8250;</div>
+          <div ref={nextButton} onClick={increaseMonth}>
+            &#8250;
+          </div>
         </div>
       </div>
       <div className="day_section">
