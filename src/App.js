@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Curosel from "./Components/Curosel";
 import EventCard from "./Components/EventCard";
 import Header from "./Components/Header";
@@ -18,6 +18,8 @@ function App() {
   const [nextMonthValue, setNextMonthValue] = useState([]);
   const [prevMonthValue, setPrevMonthValue] = useState([]);
   const [yaxis, setYaxis] = useState(0);
+  const nextButton = useRef();
+  const prevButton = useRef();
 
   //SCROLL TO TOP AFTER CHANING MONTH
   const scrollToTop = () => {
@@ -27,35 +29,22 @@ function App() {
   //FOR SCROLL FUNCTION
   const secondEvent = debounce((e) => {
     // console.log("event");
-    // console.log(window.scrollY, yaxis);
-    // setYaxis(window.scrollY);
-    // if (window.scrollY == 0) {
-    //   if (thisMonth === 12) {
-    //     setThisYear(thisYear - 1);
-    //     setThisMonth(12);
-    //   } else {
-    //     setThisMonth(thisMonth - 1);
-    //   }
 
-    //   scrollToTop();
-    // } else {
-    //   if (thisMonth === 12) {
-    //     setThisMonth(1);
-    //     setThisYear(thisYear + 1);
-    //   } else {
-    //     setThisMonth(thisMonth + 1);
-    //   }
+    if (window.scrollY == 0) {
+      console.log("scroll top");
+      prevButton.current.click();
+    } else {
+      console.log("scroll down");
 
-    //   scrollToTop();
-    // }
-    setThisMonth(thisMonth - 1);
-  }, 100);
+      nextButton.current.click();
+    }
+  }, 1000);
 
   //LINK SCROLL FOR MONTH CHANGE
-  // React.useEffect(() => {
-  //   window.addEventListener("wheel", (e) => secondEvent(e));
-  //   // return window.removeEventListener("wheel", (e) => secondEvent(e));
-  // }, []);
+  React.useEffect(() => {
+    window.addEventListener("wheel", (e) => secondEvent(e));
+    // return window.removeEventListener("wheel", (e) => secondEvent(e));
+  }, []);
 
   //ADD MONTH DAY YEAR WHEN MONTH CHANGED
   React.useEffect(() => {
@@ -123,6 +112,8 @@ function App() {
         thisMonth={thisMonth}
         thisYear={thisYear}
         setToday={setToday}
+        nextButton={nextButton}
+        prevButton={prevButton}
       />
       <div className="date_section">
         {currentMonthValue && (
