@@ -17,7 +17,6 @@ function App() {
   const [currentMonthValue, setCurrentMonthValue] = useState([]);
   const [nextMonthValue, setNextMonthValue] = useState([]);
   const [prevMonthValue, setPrevMonthValue] = useState([]);
-  const [yaxis, setYaxis] = useState(0);
   const nextButton = useRef();
   const prevButton = useRef();
 
@@ -29,14 +28,19 @@ function App() {
   //FOR SCROLL FUNCTION
   const secondEvent = debounce((e) => {
     // console.log("event");
+    // console.log(window.innerHeight, window.pageYOffset);
+    // console.log(document.body.offsetHeight);
 
     if (window.scrollY == 0) {
       console.log("scroll top");
       prevButton.current.click();
-    } else {
+      scrollToTop();
+    }
+    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
       console.log("scroll down");
 
       nextButton.current.click();
+      scrollToTop();
     }
   }, 1000);
 
