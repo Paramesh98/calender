@@ -2,7 +2,7 @@ import React from "react";
 import Footer from "../Footer";
 import Tile from "../Tile";
 import "./styles.scss";
-// import { ResponseObjects } from "../../config/response.json";
+import { ResponseObjects as responseobject } from "../../config/response.json";
 import Curosel from "../Curosel";
 import Axios from "axios";
 
@@ -12,7 +12,7 @@ function Calender({ currentMonth, nextMonth, prevMonth, thisMonth, thisYear }) {
   const [thisMonthData, setThisMonthData] = React.useState([]);
   const [showEventCard, setShowEventCard] = React.useState(false);
   const [curoselDate, setCuroselDate] = React.useState();
-  const [ResponseObjects, setResponseObject] = React.useState();
+  const [ResponseObjects, setResponseObject] = React.useState(responseobject);
 
   //CONVERT FIRST DAY INTO NUMBER
   const checkFirstDate = (day) => {
@@ -55,63 +55,63 @@ function Calender({ currentMonth, nextMonth, prevMonth, thisMonth, thisYear }) {
   };
 
   //FETCH DATA FROM SERER
-  const getData = () => {
-    const requestObject = {
-      RequestObjects: [
-        {
-          Post: {
-            OperationType: "Read",
-            Privacy: {
-              SearchValues: ["Public"],
-              Return: true,
-            },
-            UserId: {
-              SearchValues: ["assign"],
-              Return: false,
-            },
-            id: {
-              Return: true,
-            },
+  // const getData = () => {
+  //   const requestObject = {
+  //     RequestObjects: [
+  //       {
+  //         Post: {
+  //           OperationType: "Read",
+  //           Privacy: {
+  //             SearchValues: ["Public"],
+  //             Return: true,
+  //           },
+  //           UserId: {
+  //             SearchValues: ["assign"],
+  //             Return: false,
+  //           },
+  //           id: {
+  //             Return: true,
+  //           },
 
-            IsCalendarEntry: {
-              SearchValues: [true],
-              Return: true,
-            },
-            Images: {
-              Return: true,
-            },
-            Text: {
-              Return: true,
-            },
-            Rating: {
-              Return: true,
-            },
-            TypeOfDay: {
-              Return: true,
-            },
+  //           IsCalendarEntry: {
+  //             SearchValues: [true],
+  //             Return: true,
+  //           },
+  //           Images: {
+  //             Return: true,
+  //           },
+  //           Text: {
+  //             Return: true,
+  //           },
+  //           Rating: {
+  //             Return: true,
+  //           },
+  //           TypeOfDay: {
+  //             Return: true,
+  //           },
 
-            MaxItemCount: "5",
+  //           MaxItemCount: "5",
 
-            CalendarDateTime: {
-              Return: true,
-              Sort: "Descending",
-            },
-            ContinuationToken: null,
-          },
-        },
-      ],
-    };
-    Axios.post(
-      "https://quinncareapidev.azurewebsites.net/api/graph",
-      requestObject
-    )
-      .then((res) => setResponseObject(res.data.ResponseObjects))
-      .catch((err) => console.log(err));
-  };
+  //           CalendarDateTime: {
+  //             Return: true,
+  //             Sort: "Descending",
+  //           },
+  //           ContinuationToken: null,
+  //         },
+  //       },
+  //     ],
+  //   };
+  //   Axios.post(
+  //     "https://quinncareapidev.azurewebsites.net/api/graph",
+  //     requestObject
+  //   )
+  //     .then((res) => setResponseObject(res.data.ResponseObjects))
+  //     .catch((err) => console.log(err));
+  // };
 
   //MERGE LAST MONTH,THIS MONTH ,NEXT MONTH VALUE
   React.useEffect(() => {
-    getData();
+    // getData();
     const checkFirstDay = () => {
       let firstDay = currentMonth[0].split("-")[1];
       let lastDay = currentMonth[currentMonth.length - 1].split("-")[1];
